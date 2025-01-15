@@ -1,8 +1,9 @@
 'use client';
 
-import { type ElementRef, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
+import { type ElementRef, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
+import { useClickOutside } from '../../../hooks/use-modal';
 
 export function Modal({ children }: { children: React.ReactNode }) {
   const router = useRouter();
@@ -18,6 +19,8 @@ export function Modal({ children }: { children: React.ReactNode }) {
     router.back();
   }
 
+  useClickOutside(dialogRef, onDismiss);
+
   return createPortal(
     <div className="modal-backdrop">
       <dialog ref={dialogRef} className="modal" onClose={onDismiss}>
@@ -28,3 +31,4 @@ export function Modal({ children }: { children: React.ReactNode }) {
     document.getElementById('modal-root')!
   );
 }
+
